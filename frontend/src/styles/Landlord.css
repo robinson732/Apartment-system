@@ -1,0 +1,835 @@
+/* LANDLORD DASHBOARD STYLES */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.landlord-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f7fa;
+}
+
+/* ==================== SIDEBAR ==================== */
+.landlord-sidebar {
+  width: 280px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+.sidebar-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.sidebar-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  flex: 1;
+}
+
+.sidebar-menu li {
+  padding: 1rem 1.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.sidebar-menu li:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(5px);
+}
+
+.sidebar-menu li.active {
+  background: rgba(255, 255, 255, 0.25);
+  border-left: 4px solid white;
+}
+
+.menu-icon {
+  font-size: 1.3rem;
+}
+
+.logout-btn {
+  padding: 0.9rem 1.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: white;
+}
+
+/* ==================== MAIN CONTENT ==================== */
+.landlord-main {
+  margin-left: 280px;
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.landlord-header {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.landlord-header h1 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.landlord-header p {
+  color: #7f8c8d;
+  font-size: 1.05rem;
+}
+
+.refresh-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  font-size: 0.95rem;
+}
+
+.refresh-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+}
+
+.refresh-btn:active {
+  animation: spin 0.6s ease;
+}
+
+.error-alert {
+  background: #fadbd8;
+  color: #c0392b;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #e74c3c;
+  font-weight: 500;
+}
+
+/* ==================== LOADING STATE ==================== */
+.landlord-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e0e0e0;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==================== DASHBOARD VIEW ==================== */
+
+/* Summary Cards */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+  border-left: 5px solid;
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.summary-card.total {
+  border-left-color: #667eea;
+}
+
+.summary-card.collected {
+  border-left-color: #27ae60;
+}
+
+.summary-card.outstanding {
+  border-left-color: #f39c12;
+}
+
+.summary-card.possible {
+  border-left-color: #3498db;
+}
+
+.card-icon {
+  font-size: 2.5rem;
+}
+
+.card-content h3 {
+  color: #7f8c8d;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.card-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+/* Stats Section */
+.stats-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.stats-section h2 {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.stat-box {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stat-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* Quick Status Section */
+.quick-status-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.quick-status-section h2 {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.status-table {
+  overflow-x: auto;
+}
+
+.status-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.status-table th {
+  background: #f8f9fa;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #2c3e50;
+  border-bottom: 2px solid #ecf0f1;
+}
+
+.status-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.tenant-name {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.balance-cell {
+  font-weight: 600;
+}
+
+.balance-amount {
+  color: #e74c3c;
+}
+
+.balance-paid {
+  color: #27ae60;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-badge.paid {
+  background: #d5f4e6;
+  color: #27ae60;
+}
+
+.status-badge.pending {
+  background: #fadbd8;
+  color: #c0392b;
+}
+
+.status-table tr.paid-row {
+  background: #f0fdf4;
+}
+
+.status-table tr.pending-row:hover {
+  background: #f8f9fa;
+}
+
+/* ==================== TENANTS VIEW ==================== */
+.tenants-view {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.tenants-view h2 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #7f8c8d;
+}
+
+.tenants-table-scroll {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid #ecf0f1;
+}
+
+.tenants-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.tenants-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.tenants-table th {
+  padding: 1.2rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.tenants-table td {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.tenants-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.tenants-table .bold {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.balance-due {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.balance-paid {
+  color: #27ae60;
+  font-weight: 700;
+}
+
+.payment-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.payment-badge.paid {
+  background: #d5f4e6;
+  color: #27ae60;
+}
+
+.payment-badge.pending {
+  background: #fadbd8;
+  color: #c0392b;
+}
+
+.remove-btn {
+  padding: 0.5rem 1rem;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+}
+
+.remove-btn:hover:not(:disabled) {
+  background: #c0392b;
+  transform: scale(1.05);
+}
+
+.remove-btn.confirm {
+  background: #c0392b;
+  animation: pulse 0.6s ease infinite;
+}
+
+.remove-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* ==================== PAYMENTS VIEW ==================== */
+.payments-view {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.payments-view h2 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.payment-status-section {
+  margin-bottom: 2.5rem;
+}
+
+.payment-status-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.status-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.status-card.full-paid {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.status-card.partial-paid {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.status-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.status-card h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  opacity: 0.95;
+}
+
+.status-card .count {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.status-card .revenue,
+.status-card .balance {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Payment Details Table */
+.payment-details {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid #ecf0f1;
+}
+
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.payment-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.payment-table th {
+  padding: 1.2rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.payment-table td {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.payment-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.payment-table tr.fully-paid {
+  background: #f0fdf4;
+}
+
+.tenant-cell {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.payment-table .amount {
+  font-weight: 500;
+}
+
+.payment-table .amount.paid {
+  color: #27ae60;
+}
+
+.payment-table .amount.pending {
+  color: #e74c3c;
+}
+
+.payment-table .bold {
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.balance-amount {
+  color: #e74c3c;
+  font-weight: 700;
+}
+
+.balance-zero {
+  color: #27ae60;
+  font-weight: 700;
+}
+
+.progress-bar {
+  position: relative;
+  height: 24px;
+  background: #ecf0f1;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-fill {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  top: 0;
+  transition: width 0.3s ease;
+  border-radius: 12px;
+}
+
+.progress-text {
+  position: relative;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #2c3e50;
+  z-index: 1;
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 1024px) {
+  .landlord-sidebar {
+    width: 200px;
+    padding: 1.5rem 0.75rem;
+  }
+
+  .sidebar-logo {
+    font-size: 1.2rem;
+  }
+
+  .sidebar-menu li {
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .landlord-main {
+    margin-left: 200px;
+    padding: 1.5rem;
+  }
+
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .payment-status-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .landlord-sidebar {
+    width: 160px;
+    padding: 1rem 0.5rem;
+  }
+
+  .sidebar-logo {
+    font-size: 1rem;
+  }
+
+  .sidebar-menu li {
+    padding: 0.75rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .menu-icon {
+    font-size: 1.1rem;
+  }
+
+  .landlord-main {
+    margin-left: 160px;
+    padding: 1rem;
+  }
+
+  .landlord-header {
+    padding: 1.5rem;
+  }
+
+  .landlord-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .summary-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .card-value {
+    font-size: 1.5rem;
+  }
+
+  .stats-section,
+  .quick-status-section,
+  .tenants-view,
+  .payments-view {
+    padding: 1.5rem;
+  }
+
+  .tenants-table,
+  .payment-table {
+    font-size: 0.8rem;
+  }
+
+  .tenants-table th,
+  .tenants-table td,
+  .payment-table th,
+  .payment-table td {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .landlord-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 1rem;
+  }
+
+  .landlord-main {
+    margin-left: 0;
+    padding: 0.75rem;
+  }
+
+  .sidebar-menu {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .sidebar-menu li {
+    flex: 1;
+    padding: 0.75rem;
+    margin-bottom: 0;
+    justify-content: center;
+    font-size: 0.75rem;
+  }
+
+  .menu-icon {
+    font-size: 1rem;
+  }
+
+  .landlord-header {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .landlord-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .card-content h3 {
+    font-size: 0.8rem;
+  }
+
+  .card-value {
+    font-size: 1.3rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .tenants-table-scroll,
+  .payment-details {
+    overflow-x: scroll;
+  }
+
+  .status-table table,
+  .tenants-table,
+  .payment-table {
+    font-size: 0.7rem;
+  }
+
+  .status-table th,
+  .status-table td,
+  .tenants-table th,
+  .tenants-table td,
+  .payment-table th,
+  .payment-table td {
+    padding: 0.5rem;
+  }
+
+  .remove-btn {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.7rem;
+  }
+
+  .status-badge,
+  .payment-badge {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+  }
+}
+
