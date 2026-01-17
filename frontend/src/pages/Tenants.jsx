@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/Tenants.css";
+import "../styles/TenantDashboard.css";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -12,7 +12,7 @@ const RENT_TABLE = {
 };
 
 export default function TenantDashboard() {
-  const tenantName = localStorage.getItem("userName"); // login saves `userName`
+  const tenantName = localStorage.getItem("tenantName"); // stored at login
   const [tenant, setTenant] = useState(null);
   const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState([]);
@@ -31,12 +31,6 @@ export default function TenantDashboard() {
           t => t.name?.toLowerCase() === tenantName?.toLowerCase()
         );
         setTenant(me || null);
-
-        // 3️⃣ Fetch landlord messages
-        const msgRes = await fetch(`${API}/api/messages`);
-        const msgs = await msgRes.json();
-        setMessages(msgs || []);
-
       } catch (error) {
         console.error("Error loading tenant data:", error);
       } finally {

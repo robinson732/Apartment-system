@@ -10,3 +10,10 @@ class Config:
     
     # Disable modification tracking to avoid unnecessary warnings
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
+    # Landlord access code for registration
+    LANDLORD_ACCESS_CODE = "landlord123"
+    
+    # Hardcoded landlord credentials
+    LANDLORD_EMAIL = "johndoe@example.com"
+    LANDLORD_PASSWORD = "password123"

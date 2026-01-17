@@ -1,78 +1,33 @@
-﻿from datetime import timedelta
-
+﻿# auth.py
 from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import (
-    JWTManager,
-    create_access_token,
-    get_jwt_identity,
-    jwt_required,
-)
+import jwt
+from datetime import datetime, timedelta
 
-from models.landlord import Landlord
-
-jwt = JWTManager()
-
-
-def init_jwt(app):
-    """Initialize JWTManager on the Flask app.
-
-    Ensures `JWT_SECRET_KEY` is set (falls back to `SECRET_KEY`) and
-    sets a reasonable default expiry for access tokens.
-    """
-    app.config.setdefault("JWT_SECRET_KEY", app.config.get("SECRET_KEY") or "change-me")
-    app.config.setdefault("JWT_ACCESS_TOKEN_EXPIRES", timedelta(hours=8))
-    jwt.init_app(app)
-
-
+# Hash a plain password (used during signup)
 def hash_password(password: str) -> str:
-    """Return a secure hash for the given password."""
     return generate_password_hash(password)
 
-
-def verify_password(hashed: str, password: str) -> bool:
-    """Verify a plaintext password against its hash."""
+# Verify a password against the hash (used during login)
+def verify_password(password: str, hashed: str) -> bool:
     return check_password_hash(hashed, password)
 
+# Generate a JWT token for a user
+def create_token(user_id: int, role: str, expires_minutes: int = 60) -> str:
+    payload = {
+        "user_id": user_id,
+        "role": role,
+        "exp": datetime.utcnow() + timedelta(minutes=expires_minutes)
+    }
+    token = jwt.encode(payload, current_app.config["SECRET_KEY"], algorithm="HS256")
+    return token
 
-def create_access_token_for_landlord(landlord: Landlord) -> str:
-    """Create a JWT access token for a `Landlord` instance.
-
-    The token identity is a small dict with `id`, `role` and `name` so
-    routes can quickly inspect role and identity.
-    """
-    identity = {"id": landlord.id, "role": "landlord", "name": landlord.name}
-    return create_access_token(identity=identity)
-
-
-def get_current_landlord():
-    """Return the `Landlord` for the current JWT identity or `None`.
-
-    Use inside request handlers protected with `@jwt_required()`.
-    """
-    identity = get_jwt_identity()
-    if not identity:
-        return None
-    # support both dict identity (as created above) or raw id
-    landlord_id = identity.get("id") if isinstance(identity, dict) else identity
+# Decode and verify a JWT token
+def decode_token(token: str) -> dict:
     try:
-        return Landlord.query.get(landlord_id)
-    except Exception:
-        return None
-
-
-# Re-export for convenience in routes
-__all__ = [
-    "jwt",
-    "init_jwt",
-    "hash_password",
-    "verify_password",
-    "create_access_token_for_landlord",
-    "get_current_landlord",
-    "jwt_required",
-]
-from models.tenant import Tenant
-
-
-def create_access_token_for_tenant(tenant: Tenant) -> str:
-    identity = {
+        payload = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
+        return payload
+    except jwt.ExpiredSignatureError:
+        raise Exception("Token has expired")
+    except jwt.InvalidTokenError:
+        raise Exception("Invalid token")
