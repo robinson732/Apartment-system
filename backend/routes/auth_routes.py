@@ -45,7 +45,14 @@ def signup():
         db.session.commit()
         
         token = create_token(landlord.id, "landlord")
-        return jsonify({"token": token, "user": {"id": landlord.id, "role": "landlord"}}), 201
+        return jsonify({
+            "token": token, 
+            "user": {
+                "id": landlord.id, 
+                "role": "landlord",
+                "name": landlord.name
+            }
+        }), 201
     else:
         # Tenant signup
         existing = Tenant.query.filter_by(email=email).first()
@@ -61,7 +68,14 @@ def signup():
         db.session.commit()
         
         token = create_token(tenant.id, "tenant")
-        return jsonify({"token": token, "user": {"id": tenant.id, "role": "tenant"}}), 201
+        return jsonify({
+            "token": token, 
+            "user": {
+                "id": tenant.id, 
+                "role": "tenant",
+                "name": tenant.name
+            }
+        }), 201
 
 
 @auth_bp.route("/login", methods=["POST"])
@@ -78,12 +92,26 @@ def login():
     tenant = Tenant.query.filter_by(email=email).first()
     if tenant and verify_password(password, tenant.password):
         token = create_token(tenant.id, "tenant")
-        return jsonify({"token": token, "user": {"id": tenant.id, "role": "tenant"}}), 200
+        return jsonify({
+            "token": token, 
+            "user": {
+                "id": tenant.id, 
+                "role": "tenant",
+                "name": tenant.name
+            }
+        }), 200
     
     # Try to find landlord
     landlord = Landlord.query.filter_by(email=email).first()
     if landlord and verify_password(password, landlord.password):
         token = create_token(landlord.id, "landlord")
-        return jsonify({"token": token, "user": {"id": landlord.id, "role": "landlord"}}), 200
+        return jsonify({
+            "token": token, 
+            "user": {
+                "id": landlord.id, 
+                "role": "landlord",
+                "name": landlord.name
+            }
+        }), 200
     
     return jsonify({"error": "Invalid email or password"}), 401

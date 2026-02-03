@@ -56,50 +56,50 @@ def seed_data():
         tenants_data = [
             {
                 "name": "Alice Johnson",
-                "email": "alice@example.com",
+                "email": "alice@gmail.com",
                 "password": "password123",
                 "room_type": "1bedroom",
                 "house_id": house1.id
             },
             {
                 "name": "Bob Smith",
-                "email": "bob@example.com",
-                "password": "password123",
+                "email": "bob@gmail.com",
+                "password": "bob123",
                 "room_type": "2bedroom",
                 "house_id": house2.id
             },
             {
                 "name": "Carol Davis",
-                "email": "carol@example.com",
-                "password": "password123",
+                "email": "carol@gmail.com",
+                "password": "carol123",
                 "room_type": "bedsitter",
                 "house_id": house1.id
             },
             {
                 "name": "David Wilson",
-                "email": "david@example.com",
-                "password": "password123",
+                "email": "david@gmail.com",
+                "password": "david123",
                 "room_type": "studio",
                 "house_id": house3.id
             },
             {
                 "name": "Emma Brown",
-                "email": "emma@example.com",
-                "password": "password123",
+                "email": "emma@gmail.com",
+                "password": "emma123",
                 "room_type": "3bedroom",
                 "house_id": house2.id
             },
             {
                 "name": "Frank Miller",
-                "email": "frank@example.com",
-                "password": "password123",
+                "email": "frank@gmail.com",
+                "password": "frank123",
                 "room_type": "1bedroom",
                 "house_id": None  # Not assigned to a house yet
             },
             {
                 "name": "Grace Lee",
-                "email": "grace@example.com",
-                "password": "password123",
+                "email": "grace@gmail.com",
+                "password": "grace123",
                 "room_type": "2bedroom",
                 "house_id": None  # Not assigned to a house yet
             }
