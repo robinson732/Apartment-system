@@ -29,7 +29,7 @@ export default function RoomSelection() {
       const token = localStorage.getItem("token");
       // Try to update room type in backend
       try {
-        const res = await fetch("http://localhost:5000/api/tenants/select-room", {
+        const res = await fetch("/api/tenants/select-room", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
