@@ -3,7 +3,13 @@ flask_sqlalchemy
 flask_jwt_extended
 flask_cors
 flask_migrate
+flask_marshmallow
 marshmallow-sqlalchemy
 PyJWT
 psycopg2-binary
 Werkzeug
+brevo-python
+email-validator
+python-dotenv
+requests
+gunicorn
